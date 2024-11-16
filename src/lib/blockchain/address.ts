@@ -1,3 +1,3 @@
-export function getAddress(network: string) {
-  return "0x712559Eba0d4F9d52656033F17Ac22a8B6CE0771";
+export function getAddress(chainId: number) {
+  return "0x010b517D59f336e471947a524dF115452d66417D";
 }

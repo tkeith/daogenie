@@ -223,6 +223,11 @@ export const ABI = [
     name: "daoProposals",
     outputs: [
       {
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
+      },
+      {
         internalType: "address",
         name: "creator",
         type: "address",
@@ -427,6 +432,68 @@ export const ABI = [
   {
     inputs: [
       {
+        internalType: "uint256",
+        name: "daoId",
+        type: "uint256",
+      },
+    ],
+    name: "getDaoMembersLength",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "daoId",
+        type: "uint256",
+      },
+    ],
+    name: "getDaoProposalsLength",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "daoId",
+        type: "uint256",
+      },
+      {
+        internalType: "address",
+        name: "member",
+        type: "address",
+      },
+    ],
+    name: "getDaoVotes",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
         internalType: "address",
         name: "member",
         type: "address",
@@ -486,6 +553,48 @@ export const ABI = [
     type: "function",
   },
   {
+    inputs: [],
+    name: "getDaosLength",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "daoId",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "proposalIndex",
+        type: "uint256",
+      },
+      {
+        internalType: "address",
+        name: "voter",
+        type: "address",
+      },
+    ],
+    name: "getHasVoted",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [
       {
         internalType: "uint256",
@@ -497,6 +606,11 @@ export const ABI = [
     outputs: [
       {
         components: [
+          {
+            internalType: "uint256",
+            name: "id",
+            type: "uint256",
+          },
           {
             internalType: "address",
             name: "creator",
@@ -640,4 +754,4 @@ export const ABI = [
     stateMutability: "nonpayable",
     type: "function",
   },
-];
+] as const;

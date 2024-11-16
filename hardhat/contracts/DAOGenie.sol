@@ -14,6 +14,7 @@ contract DAOGenie {
     }
 
     struct Proposal {
+        uint256 id;
         address creator;
         uint256 createdAt;
         uint256 votingEndsAt;
@@ -32,8 +33,7 @@ contract DAOGenie {
     event DAOVotesReallocated(uint256 daoId, address from, address to, uint256 amount);
 
     // State variables
-    uint256 private nextDaoId = 1;
-    mapping(uint256 => DAO) public daos;
+    DAO[] public daos;
     mapping(uint256 => address[]) public daoMembers;
     mapping(uint256 => mapping(address => uint256)) public daoVotes;
     mapping(uint256 => Proposal[]) public daoProposals;
@@ -44,9 +44,8 @@ contract DAOGenie {
     uint256 private constant VOTING_DURATION = 7 days;
 
     function createDAO(string memory name, address treasuryAddress) external returns (uint256) {
-        uint256 daoId = nextDaoId++;
-
-        daos[daoId] = DAO({
+        uint256 daoId = daos.length;
+        daos.push(DAO({
             id: daoId,
             createdAt: block.timestamp,
             name: name,
@@ -55,7 +54,7 @@ contract DAOGenie {
             numberOfMembers: 1,
             numberOfProposals: 0,
             treasuryAddress: treasuryAddress
-        });
+        }));
 
         daoMembers[daoId].push(msg.sender);
         daoVotes[daoId][msg.sender] = INITIAL_VOTES;
@@ -89,6 +88,7 @@ contract DAOGenie {
         uint256 votesNeeded = daos[daoId].totalVotes / 2 + 1;
 
         Proposal memory newProposal = Proposal({
+            id: daoProposals[daoId].length,
             creator: msg.sender,
             createdAt: block.timestamp,
             votingEndsAt: block.timestamp + VOTING_DURATION,
@@ -150,7 +150,7 @@ contract DAOGenie {
     function getDaosByMember(address member) external view returns (DAO[] memory) {
         // First, count how many DAOs the member belongs to
         uint256 memberDaoCount = 0;
-        for (uint256 i = 1; i < nextDaoId; i++) {
+        for (uint256 i = 0; i < daos.length; i++) {
             if (daoVotes[i][member] > 0) {
                 memberDaoCount++;
             }
@@ -161,7 +161,7 @@ contract DAOGenie {
 
         // Fill the array with the member's DAOs
         uint256 currentIndex = 0;
-        for (uint256 i = 1; i < nextDaoId; i++) {
+        for (uint256 i = 0; i < daos.length; i++) {
             if (daoVotes[i][member] > 0) {
                 memberDaos[currentIndex] = daos[i];
                 currentIndex++;
@@ -169,5 +169,27 @@ contract DAOGenie {
         }
 
         return memberDaos;
+    }
+
+    // Add these new view functions after the existing view functions
+
+    function getDaosLength() external view returns (uint256) {
+        return daos.length;
+    }
+
+    function getDaoMembersLength(uint256 daoId) external view returns (uint256) {
+        return daoMembers[daoId].length;
+    }
+
+    function getDaoProposalsLength(uint256 daoId) external view returns (uint256) {
+        return daoProposals[daoId].length;
+    }
+
+    function getDaoVotes(uint256 daoId, address member) external view returns (uint256) {
+        return daoVotes[daoId][member];
+    }
+
+    function getHasVoted(uint256 daoId, uint256 proposalIndex, address voter) external view returns (bool) {
+        return hasVoted[daoId][proposalIndex][voter];
     }
 }

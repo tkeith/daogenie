@@ -1,3 +1,4 @@
+import { NETWORKS } from "@/lib/blockchain/networks";
 import assert from "assert";
 
 export function parseOnChainProposalId(onChainProposalId: string) {
@@ -33,4 +34,12 @@ export function promiseWithResolvers<T>() {
   assert(resolve !== undefined, "resolve must be defined");
   assert(reject !== undefined, "reject must be defined");
   return { promise, resolve, reject };
+}
+
+export function getRpcUrlByChainId(chainId: number) {
+  const network = NETWORKS.find((n) => n.chainId === chainId);
+  if (!network || !network.rpcUrls.length) {
+    throw new Error(`No RPC URL found for chain ID ${chainId}`);
+  }
+  return network.rpcUrls[0]!;
 }
