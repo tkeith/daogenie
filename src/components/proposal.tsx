@@ -11,10 +11,7 @@ type ProposalProps = {
 export function Proposal({ title, status, onSelect, selected }: ProposalProps) {
   return (
     <div
-      onClick={() => {
-        onSelect();
-        selected = true;
-      }}
+      onClick={onSelect}
       className={`cursor-pointer rounded p-3 ${
         selected
           ? "border-2 border-blue-500 bg-blue-100"

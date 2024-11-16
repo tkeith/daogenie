@@ -6,6 +6,7 @@ export default function TestUiPage() {
   const dummyData = {
     daoId: 1,
     daoName: "Flamingo DAO",
+    onSwitchDao: () => console.log("Switching DAO"),
     proposals: [
       {
         id: 1,

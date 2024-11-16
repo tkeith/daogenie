@@ -1,6 +1,7 @@
 "use client";
 
 import { Proposal } from "./proposal";
+import { ProposalDetails } from "./proposal-details";
 
 export type DaoViewUiInput = {
   daoId: number;
@@ -34,6 +35,8 @@ export function DaoViewUi({
   onSwitchDao,
   children,
 }: DaoViewUiInput) {
+  const selectedProposal = proposals.find((p) => p.selected);
+
   return (
     <div className="flex w-full gap-4">
       {/* Left column - 1/3 width */}
@@ -79,7 +82,17 @@ export function DaoViewUi({
       </div>
 
       {/* Right column - 2/3 width */}
-      <div className="w-2/3 rounded-lg bg-gray-50 p-4">{children}</div>
+      <div className="w-2/3 rounded-lg bg-gray-50 p-4">
+        {selectedProposal ? (
+          <ProposalDetails
+            id={selectedProposal.id}
+            title={selectedProposal.title}
+            status={selectedProposal.status}
+          />
+        ) : (
+          children
+        )}
+      </div>
     </div>
   );
 }
