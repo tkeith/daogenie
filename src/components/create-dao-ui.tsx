@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 
-export default function CreateDaoUi({
+export function CreateDaoUi({
   onSubmit,
 }: {
   onSubmit: (name: string) => void;
