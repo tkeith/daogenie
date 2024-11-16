@@ -18,8 +18,8 @@ export default function TestProposalDetailsPage() {
         OnSubmitAddMember={() => {
           console.log("Submitted Add Member");
         }}
-        OnDeleteMember={() => {
-          console.log("Deleted Member");
+        OnUpdateMemberVotes={() => {
+          console.log("Updated Member Votes");
         }}
       />
     </DaoViewUi>
