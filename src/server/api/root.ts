@@ -1,9 +1,7 @@
 import { createTreasury } from "@/server/api/procedures/create-treasury";
-import {
-  createCallerFactory,
-  createTRPCRouter,
-  procedure,
-} from "@/server/api/trpc";
+import { getExecution } from "@/server/api/procedures/get-execution";
+import { launchExecution } from "@/server/api/procedures/launch-execution";
+import { createCallerFactory, createTRPCRouter } from "@/server/api/trpc";
 
 /**
  * This is the primary router for your server.
@@ -12,6 +10,8 @@ import {
  */
 export const appRouter = createTRPCRouter({
   createTreasury,
+  getExecution,
+  launchExecution,
 });
 
 // export type definition of API

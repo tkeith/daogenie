@@ -17,12 +17,21 @@ model Treasury {
   createdAt DateTime @default(now())
 }
 
+enum ExecutionStatus {
+  PENDING
+  DONE
+  ERROR
+}
+
 // passed proposal execution
 model Execution {
   id Int @id @default(autoincrement())
-  daoId Int
-  proposalId Int
+  onChainProposalId String @unique // {chainId}-{proposalId}
   createdAt DateTime @default(now())
   title String
   description String
+  treasuryId Int
+  status ExecutionStatus @default(PENDING)
+  result String?
+  error String?
 }
