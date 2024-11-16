@@ -13,7 +13,7 @@ datasource db {
 model Treasury {
   id Int @id @default(autoincrement())
   address String @unique
-  publicKey String
+  privateKey String
   createdAt DateTime @default(now())
 }
 
