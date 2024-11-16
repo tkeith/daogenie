@@ -7,29 +7,22 @@ import { z } from "zod";
 export const launchExecution = procedure
   .input(
     z.object({
-      proposal: z.object({
-        id: z.number(),
-        title: z.string(),
-        description: z.string(),
-      }),
-      treasury: z.object({
-        address: z.string(),
-      }),
+      onChainProposalId: z.string(),
+      proposalTitle: z.string(),
+      proposalDescription: z.string(),
+      treasuryAddress: z.string(),
     }),
   )
   .mutation(async ({ input, ctx }) => {
     const treasury = await db.treasury.findUniqueOrThrow({
-      where: { address: input.treasury.address },
+      where: { address: input.treasuryAddress },
     });
 
     const execution = await db.execution.create({
       data: {
-        onChainProposalId: makeOnChainProposalId({
-          chainId: 1,
-          proposalId: input.proposal.id,
-        }),
-        title: input.proposal.title,
-        description: input.proposal.description,
+        onChainProposalId: input.onChainProposalId,
+        title: input.proposalTitle,
+        description: input.proposalDescription,
         treasuryId: treasury.id,
       },
     });

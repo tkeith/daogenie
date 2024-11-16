@@ -18,7 +18,7 @@ model Treasury {
 }
 
 enum ExecutionStatus {
-  PENDING
+  RUNNING
   DONE
   ERROR
 }
@@ -31,7 +31,7 @@ model Execution {
   title String
   description String
   treasuryId Int
-  status ExecutionStatus @default(PENDING)
+  status ExecutionStatus @default(RUNNING)
   result String?
   error String?
 }
