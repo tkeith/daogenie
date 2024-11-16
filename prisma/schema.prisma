@@ -17,25 +17,12 @@ model Treasury {
   createdAt DateTime @default(now())
 }
 
-model User {
+// passed proposal execution
+model Execution {
   id Int @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  address   String
-}
-
-model Dao {
-  id Int @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  name String
-  treasury Treasury @relation(fields: [treasuryId], references: [id])
-  treasuryId Int
-}
-
-model DaoMember {
-  id Int @id @default(autoincrement())
-  createdAt DateTime @default(now())
   daoId Int
-  userId Int
+  proposalId Int
+  createdAt DateTime @default(now())
+  title String
+  description String
 }
-
-model
