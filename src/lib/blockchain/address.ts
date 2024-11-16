@@ -1,3 +1,3 @@
 export function getAddress(network: string) {
-  return "0x99c278ac17894f0999aBc01ba508034D96C46B75";
+  return "0x712559Eba0d4F9d52656033F17Ac22a8B6CE0771";
 }

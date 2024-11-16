@@ -4,8 +4,11 @@ import { ExecutionStatus } from "@prisma/client";
 
 const ON_CHAIN_PROPOSAL_ID =
   "99999-" + Math.floor(Date.now() / 1000).toString();
-const PROPOSAL_TITLE = "Test Proposal";
-const PROPOSAL_DESCRIPTION = "This is a test proposal";
+// const PROPOSAL_TITLE = "Refill prepaid phone card";
+// const PROPOSAL_DESCRIPTION =
+//   "Top up the prepaid phone card for 0985253928 with 10THB";
+const PROPOSAL_TITLE = "Donate to the water project";
+const PROPOSAL_DESCRIPTION = "Donate 0.0001 ETH to the water project";
 const TREASURY_ADDRESS = "0x79940Eb5606CA12487B4C1d513be6354f5169DD8";
 
 async function main() {

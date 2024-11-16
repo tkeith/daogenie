@@ -9,6 +9,7 @@ import { z, ZodError } from "zod";
 import assert from "assert";
 import { zodToJsonSchema } from "zod-to-json-schema";
 import { env } from "@/env.js";
+import { promiseWithResolvers } from "@/lib/utils";
 
 export type ModelOpts = {
   model?: string;
@@ -161,17 +162,28 @@ export async function runAgenticConversation({
     tools === undefined || tools.length === 0 ? undefined : tools;
 
   while (true) {
-    if (assistantMessageCount >= 15) {
-      throw new Error("Conversation not ended after 15 assistant messages");
+    if (assistantMessageCount >= 40) {
+      throw new Error("Conversation not ended after 40 assistant messages");
     }
 
-    const generatedMessage = await generateAssistantMessage({
-      modelOpts,
-      system,
-      messages: ongoingMessages,
-      tools: realTools,
-      onNoToolUse,
-    });
+    let generatedMessage;
+
+    try {
+      generatedMessage = await generateAssistantMessage({
+        modelOpts,
+        system,
+        messages: ongoingMessages,
+        tools: realTools,
+        onNoToolUse,
+      });
+    } catch (e) {
+      console.error("Error generating assistant message:", e);
+      console.error(
+        "Ongoing messages:",
+        JSON.stringify(ongoingMessages, null, 2),
+      );
+      throw e;
+    }
 
     const llmResponse = await handleLLMResponse(
       {
@@ -217,6 +229,35 @@ export async function runAgenticConversation({
   }
 }
 
+function cleanMessages(messages: Array<MessageParam>) {
+  // for assistant messages, trim all text blocks, and then remove the ones that are empty
+  return messages.map((message) => {
+    if (message.role === "assistant") {
+      if (typeof message.content === "string") {
+        return { ...message, content: message.content.trim() };
+      } else {
+        return {
+          ...message,
+          content: message.content
+            .map((block) => {
+              if (block.type === "text") {
+                return { ...block, text: block.text.trim() };
+              }
+              return block;
+            })
+            .filter((block) => {
+              if (block.type === "text") {
+                return block.text.trim().length > 0;
+              }
+              return true;
+            }),
+        };
+      }
+    }
+    return message;
+  });
+}
+
 async function generateAssistantMessage(
   conversation: ConversationOpts,
 ): Promise<Message> {
@@ -236,19 +277,21 @@ async function generateAssistantMessage(
     apiKey: env.ANTHROPIC_API_KEY,
   });
 
-  const realModelName = modelOpts?.model ?? "claude-3-5-sonnet-20240620";
+  const realModelName = modelOpts?.model ?? "claude-3-5-sonnet-20241022";
   const realTemperature = modelOpts?.temperature ?? 0;
   const realMaxTokens = modelOpts?.maxTokens ?? 8192;
 
   const anthropicToolDefinitions =
     tools === undefined ? undefined : getAnthropicToolDefinitions(tools);
 
+  const cleanedMessages = cleanMessages(messages);
+
   const completion = anthropic.messages.stream({
     model: realModelName,
     temperature: realTemperature,
     max_tokens: realMaxTokens,
     system: system,
-    messages: messages,
+    messages: cleanedMessages,
     tools: anthropicToolDefinitions,
   });
 
@@ -435,4 +478,30 @@ async function getToolResult(
   });
 
   return toolResult;
+}
+
+export async function simpleAnthropicQuestion(question: string) {
+  const { promise, resolve, reject } = promiseWithResolvers<string>();
+
+  runAgenticConversation({
+    modelOpts: {
+      model: "claude-3-5-sonnet-20241022",
+    },
+    messages: [{ role: "user", content: question }],
+    tools: [
+      defineTool({
+        name: "answer_question",
+        description: "Provide answer to the user",
+        inputSchema: z.object({
+          answer: z.string(),
+        }),
+        func: async ({ input: { answer } }) => {
+          resolve(answer);
+          return { type: "end_conversation" };
+        },
+      }),
+    ],
+  }).catch(reject);
+
+  return promise;
 }

@@ -37,6 +37,7 @@ contract DAOGenie {
     mapping(uint256 => address[]) public daoMembers;
     mapping(uint256 => mapping(address => uint256)) public daoVotes;
     mapping(uint256 => Proposal[]) public daoProposals;
+    mapping(uint256 => mapping(uint256 => mapping(address => bool))) public hasVoted; // daoId => proposalIndex => voter => hasVoted
 
     // Constants
     uint256 private constant INITIAL_VOTES = 1_000_000;
@@ -107,6 +108,7 @@ contract DAOGenie {
 
     function voteOnProposal(uint256 daoId, uint256 proposalIndex) external {
         require(daoVotes[daoId][msg.sender] > 0, "Not a DAO member");
+        require(!hasVoted[daoId][proposalIndex][msg.sender], "Already voted");
 
         Proposal storage proposal = daoProposals[daoId][proposalIndex];
 
@@ -115,6 +117,9 @@ contract DAOGenie {
 
         uint256 memberVotes = daoVotes[daoId][msg.sender];
         proposal.yesVotes += memberVotes;
+
+        // Mark that this member has voted
+        hasVoted[daoId][proposalIndex][msg.sender] = true;
 
         emit ProposalVotedOn(daoId, proposalIndex, msg.sender, memberVotes);
 

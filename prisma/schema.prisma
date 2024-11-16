@@ -15,11 +15,12 @@ model Treasury {
   address String @unique
   privateKey String
   createdAt DateTime @default(now())
+  executions Execution[]
 }
 
 enum ExecutionStatus {
   RUNNING
-  DONE
+  COMPLETE
   ERROR
 }
 
@@ -34,4 +35,5 @@ model Execution {
   status ExecutionStatus @default(RUNNING)
   result String?
   error String?
+  treasury Treasury @relation(fields: [treasuryId], references: [id])
 }

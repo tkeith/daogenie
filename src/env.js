@@ -12,6 +12,7 @@ export const env = createEnv({
       .default("development"),
     DYNAMIC_ENV_ID: z.string(),
     ANTHROPIC_API_KEY: z.string(),
+    ALORIA_API_KEY: z.string(),
   },
 
   /**
@@ -34,6 +35,7 @@ export const env = createEnv({
     DYNAMIC_ENV_ID: process.env.DYNAMIC_ENV_ID,
     NEXT_PUBLIC_DYNAMIC_ENV_ID: process.env.NEXT_PUBLIC_DYNAMIC_ENV_ID,
     ANTHROPIC_API_KEY: process.env.ANTHROPIC_API_KEY,
+    ALORIA_API_KEY: process.env.ALORIA_API_KEY,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
