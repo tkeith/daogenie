@@ -1,6 +1,6 @@
 "use client";
 
-import { ProposalDetails } from "./proposal-details-ui";
+import { ProposalListCard } from "@/components/dao-view-ui/proposal-list-card";
 
 export type DaoViewUiInput = {
   daoId: number;
@@ -34,8 +34,6 @@ export function DaoViewUi({
   onSwitchDao,
   children,
 }: DaoViewUiInput) {
-  const selectedProposal = proposals.find((p) => p.selected);
-
   return (
     <div className="flex w-full gap-4">
       {/* Left column - 1/3 width */}
@@ -75,57 +73,13 @@ export function DaoViewUi({
         </div>
         <div className="space-y-2">
           {proposals.map((proposal) => (
-            <Proposal key={proposal.id} {...proposal} />
+            <ProposalListCard key={proposal.id} {...proposal} />
           ))}
         </div>
       </div>
 
       {/* Right column - 2/3 width */}
-      <div className="w-2/3 rounded-lg bg-gray-50 p-4">
-        {selectedProposal ? (
-          <ProposalDetails
-            id={selectedProposal.id}
-            title={selectedProposal.title}
-            status={selectedProposal.status}
-          />
-        ) : (
-          children
-        )}
-      </div>
-    </div>
-  );
-}
-
-type ProposalProps = {
-  id: number;
-  title: string;
-  status: "Voting" | "Passed" | "Failed";
-  onSelect: () => void;
-  selected: boolean;
-};
-
-export function Proposal({ title, status, onSelect, selected }: ProposalProps) {
-  return (
-    <div
-      onClick={onSelect}
-      className={`cursor-pointer rounded p-3 ${
-        selected
-          ? "border-2 border-blue-500 bg-blue-100"
-          : "bg-white hover:bg-gray-100"
-      }`}
-    >
-      <h3 className="font-medium">{title}</h3>
-      <span
-        className={`mt-1 inline-block rounded-full px-2 py-0.5 text-xs font-medium ${
-          status === "Passed"
-            ? "bg-green-100 text-green-800"
-            : status === "Failed"
-              ? "bg-red-100 text-red-800"
-              : "bg-blue-100 text-blue-800"
-        }`}
-      >
-        {status}
-      </span>
+      <div className="w-2/3 rounded-lg bg-gray-50 p-4">{children}</div>
     </div>
   );
 }
