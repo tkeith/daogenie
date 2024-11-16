@@ -5,9 +5,13 @@ export type DaoViewUiInput = {
     id: number;
     title: string;
     status: "Voting" | "Passed" | "Failed";
+    onSelect: () => void;
+    selected: boolean;
   }[];
-  selectedProposalId: number | null; // when null selected, we're showing the DAO main panel
-  onSelectProposal: (daoId: number, proposalId: number) => void;
+  createProposalSelected: boolean;
+  onSelectCreateProposal: () => void;
+  daoMainViewSelected: boolean;
+  onSelectDaoMainView: () => void;
   children: React.ReactNode;
 };
 
@@ -18,8 +22,10 @@ export function DaoViewUi({
   daoId,
   daoName,
   proposals,
-  selectedProposalId,
-  onSelectProposal,
+  createProposalSelected,
+  onSelectCreateProposal,
+  daoMainViewSelected,
+  onSelectDaoMainView,
   children,
 }: DaoViewUiInput) {
   // todo-riley

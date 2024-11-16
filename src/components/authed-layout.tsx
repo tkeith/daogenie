@@ -4,7 +4,6 @@ export function AuthedLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <DynamicWidget />
-      <p>test</p>
       {children}
     </>
   );
