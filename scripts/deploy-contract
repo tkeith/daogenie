@@ -1,0 +1,21 @@
+#!/bin/bash
+
+set -e
+cd `dirname $0`
+cd ..
+
+# read env from .env file
+export $(grep -v '^#' .env | xargs)
+
+export HARDHAT_IGNITION_CONFIRM_DEPLOYMENT=false
+
+cd hardhat
+
+NETWORK="$1"
+
+if [ -z "$NETWORK" ]; then
+  echo "Usage: $0 <network>"
+  exit 1
+fi
+
+npx hardhat ignition deploy ignition/modules/DAOGenie.cjs --network "$NETWORK"
