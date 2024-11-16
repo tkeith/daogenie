@@ -1,10 +1,10 @@
-type ProposalDetailsProps = {
+type ProposalDetailsInput = {
   id: number;
   title: string;
   status: "Voting" | "Passed" | "Failed";
 };
 
-export function ProposalDetails({ id, title, status }: ProposalDetailsProps) {
+export function ProposalDetails({ id, title, status }: ProposalDetailsInput) {
   return (
     <div className="h-full">
       <h1 className="mb-6 text-2xl font-bold">{title}</h1>
