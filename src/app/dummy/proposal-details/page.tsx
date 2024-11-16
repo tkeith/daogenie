@@ -1,42 +1,32 @@
 "use client";
 
-import { DaoViewUi } from "@/components/dao-view-ui";
-import { ProposalDetails } from "@/components/proposal-details-ui";
+import { DUMMY_DAO_VIEW_UI_PROPS } from "@/app/dummy/dao-view-ui/page";
+import { DaoViewUi } from "@/components/dao-view-ui/dao-view-ui";
+import { ProposalDetailsUi } from "@/components/proposal-details-ui";
 
 export default function TestProposalDetailsPage() {
-  const dummyData = {
-    daoId: 1,
-    daoName: "Flamingo DAO",
-    onSwitchDao: () => console.log("Switching DAO"),
-    proposals: [
-      {
-        id: 1,
-        title: "First Proposal",
-        status: "Voting" as const,
-        onSelect: () => console.log("Proposal 1 selected"),
-        selected: false,
-      },
-      {
-        id: 2,
-        title: "Second Proposal",
-        status: "Passed" as const,
-        onSelect: () => console.log("Proposal 2 selected"),
-        selected: false,
-      },
-      {
-        id: 3,
-        title: "Third Proposal",
-        status: "Failed" as const,
-        onSelect: () => console.log("Proposal 3 selected"),
-        selected: true,
-      },
-    ],
-    createProposalSelected: false,
-    onSelectCreateProposal: () => console.log("Create proposal selected"),
-    daoMainViewSelected: false,
-    onSelectDaoMainView: () => console.log("Main view selected"),
-    children: <div>Content goes here</div>,
-  };
-
-  return <DaoViewUi {...dummyData} />;
+  return (
+    <DaoViewUi {...DUMMY_DAO_VIEW_UI_PROPS}>
+      <ProposalDetailsUi
+        currentVotes={500}
+        votesRequired={1000}
+        votedStatus={false}
+        OnSelectedYes={() => {
+          console.log("Voted Yes");
+        }}
+        OnSelectedNo={() => {
+          console.log("Voted No");
+        }}
+        proposal={{
+          id: 1,
+          title: "First Proposal",
+          status: "Voting",
+          description: "This is the description of the first proposal",
+          votesReceived: 500,
+          createdAt: "2021-01-01 12:00:00",
+          creatorWalletAddress: "0x1234567890abcdef",
+        }}
+      />
+    </DaoViewUi>
+  );
 }
