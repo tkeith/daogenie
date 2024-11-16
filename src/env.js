@@ -10,6 +10,8 @@ export const env = createEnv({
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
+    DYNAMIC_ENV_ID: z.string(),
+    ANTHROPIC_API_KEY: z.string(),
   },
 
   /**
@@ -19,6 +21,7 @@ export const env = createEnv({
    */
   client: {
     // NEXT_PUBLIC_CLIENTVAR: z.string(),
+    NEXT_PUBLIC_DYNAMIC_ENV_ID: z.string(),
   },
 
   /**
@@ -28,6 +31,9 @@ export const env = createEnv({
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
+    DYNAMIC_ENV_ID: process.env.DYNAMIC_ENV_ID,
+    NEXT_PUBLIC_DYNAMIC_ENV_ID: process.env.NEXT_PUBLIC_DYNAMIC_ENV_ID,
+    ANTHROPIC_API_KEY: process.env.ANTHROPIC_API_KEY,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
