@@ -14,7 +14,7 @@ export function DaoSelectUi({ daos, onSelectCreateDao }: DaoSelectUiInput) {
   return (
     <div className="flex h-screen flex-col items-center bg-[#EEEDF6] px-12 pt-20">
       {/* Logo
-      //todo for trevor: the page is scrollable now
+      // todo-trevor: the page is scrollable now
        */}
       <Image
         src="/dao-genie-logo-2.png"
