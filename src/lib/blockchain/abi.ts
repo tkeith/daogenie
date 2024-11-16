@@ -10,6 +10,62 @@ export const ABI = [
       },
       {
         indexed: false,
+        internalType: "address",
+        name: "creator",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "string",
+        name: "name",
+        type: "string",
+      },
+    ],
+    name: "DAOCreated",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "daoId",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "address",
+        name: "from",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "DAOVotesReallocated",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "daoId",
+        type: "uint256",
+      },
+      {
+        indexed: false,
         internalType: "uint256",
         name: "proposalIndex",
         type: "uint256",
@@ -86,6 +142,11 @@ export const ABI = [
         internalType: "string",
         name: "name",
         type: "string",
+      },
+      {
+        internalType: "address",
+        name: "treasuryAddress",
+        type: "address",
       },
     ],
     name: "createDAO",
@@ -274,6 +335,11 @@ export const ABI = [
         name: "numberOfProposals",
         type: "uint256",
       },
+      {
+        internalType: "address",
+        name: "treasuryAddress",
+        type: "address",
+      },
     ],
     stateMutability: "view",
     type: "function",
@@ -325,6 +391,11 @@ export const ABI = [
             name: "numberOfProposals",
             type: "uint256",
           },
+          {
+            internalType: "address",
+            name: "treasuryAddress",
+            type: "address",
+          },
         ],
         internalType: "struct DAOGenie.DAO",
         name: "",
@@ -348,6 +419,67 @@ export const ABI = [
         internalType: "address[]",
         name: "",
         type: "address[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "member",
+        type: "address",
+      },
+    ],
+    name: "getDaosByMember",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "uint256",
+            name: "id",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "createdAt",
+            type: "uint256",
+          },
+          {
+            internalType: "string",
+            name: "name",
+            type: "string",
+          },
+          {
+            internalType: "address",
+            name: "creator",
+            type: "address",
+          },
+          {
+            internalType: "uint256",
+            name: "totalVotes",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "numberOfMembers",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "numberOfProposals",
+            type: "uint256",
+          },
+          {
+            internalType: "address",
+            name: "treasuryAddress",
+            type: "address",
+          },
+        ],
+        internalType: "struct DAOGenie.DAO[]",
+        name: "",
+        type: "tuple[]",
       },
     ],
     stateMutability: "view",
