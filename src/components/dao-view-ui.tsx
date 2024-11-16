@@ -16,6 +16,7 @@ export type DaoViewUiInput = {
   onSelectCreateProposal: () => void;
   daoMainViewSelected: boolean;
   onSelectDaoMainView: () => void;
+  onSwitchDao: () => void;
   children: React.ReactNode;
 };
 
@@ -30,6 +31,7 @@ export function DaoViewUi({
   onSelectCreateProposal,
   daoMainViewSelected,
   onSelectDaoMainView,
+  onSwitchDao,
   children,
 }: DaoViewUiInput) {
   return (
@@ -48,7 +50,7 @@ export function DaoViewUi({
               {daoName}
             </button>
             <a
-              href="/dummy/dao-select-ui"
+              onClick={onSwitchDao}
               className="text-sm text-[#5B51F6] hover:underline"
             >
               Switch
