@@ -1,4 +1,6 @@
+import { getGenieAddress } from "@/lib/blockchain/address";
 import { NETWORKS } from "@/lib/blockchain/networks";
+import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import assert from "assert";
 
 export function parseOnChainProposalId(onChainProposalId: string) {
@@ -42,4 +44,16 @@ export function getRpcUrlByChainId(chainId: number) {
     throw new Error(`No RPC URL found for chain ID ${chainId}`);
   }
   return network.rpcUrls[0]!;
+}
+
+export function useBlockchainUtils() {
+  const { primaryWallet, network } = useDynamicContext();
+
+  if (!primaryWallet || !network || typeof network !== "number") {
+    return null;
+  }
+
+  const chainId = network;
+
+  const contractAddress = getGenieAddress(chainId) as `0x${string}`;
 }

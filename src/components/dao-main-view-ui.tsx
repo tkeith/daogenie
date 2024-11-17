@@ -1,32 +1,29 @@
 "use client";
 import { useState } from "react";
-import { TrashIcon } from "@heroicons/react/24/outline";
 
 export type DaoMainViewUiInput = {
   name: string;
   createdAt: string;
   creatorWalletAddress: string;
-  DaoWalletAddress: string;
+  daoWalletAddress: string;
   balance: number;
   totalVotes: number;
   members: {
     walletAddress: string;
     votes: number;
   }[];
-  OnSubmitAddMember: () => void;
-  OnUpdateMemberVotes: (walletAddress: string, newVotes: number) => void;
+  onUpdateMemberVotes: (walletAddress: string, newVotes: number) => void;
 };
 
 export function DaoMainViewUi({
   name,
   createdAt,
   creatorWalletAddress,
-  DaoWalletAddress,
+  daoWalletAddress,
   balance,
   totalVotes,
   members,
-  OnSubmitAddMember,
-  OnUpdateMemberVotes,
+  onUpdateMemberVotes,
 }: DaoMainViewUiInput) {
   const [isAddingMember, setIsAddingMember] = useState(false);
   const [newMemberAddress, setNewMemberAddress] = useState("");
@@ -44,7 +41,7 @@ export function DaoMainViewUi({
       alert(`Cannot allocate more than ${remainingVotes} remaining votes`);
       return;
     }
-    OnSubmitAddMember();
+    onUpdateMemberVotes(newMemberAddress, newVotes);
     setIsAddingMember(false);
     setNewMemberAddress("");
     setNewMemberVotes("");
@@ -67,7 +64,7 @@ export function DaoMainViewUi({
       return;
     }
 
-    OnUpdateMemberVotes(walletAddress, newVotes);
+    onUpdateMemberVotes(walletAddress, newVotes);
     setEditingMember(null);
     setEditingVotes("");
   };
@@ -109,7 +106,7 @@ export function DaoMainViewUi({
                 DAO Wallet Address
               </td>
               <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                {DaoWalletAddress}
+                {daoWalletAddress}
               </td>
             </tr>
             <tr>

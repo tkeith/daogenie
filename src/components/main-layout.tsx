@@ -6,7 +6,10 @@ import { NoWalletConnected } from "@/components/no-wallet-connected";
 import { Toaster } from "react-hot-toast";
 import { useEffect } from "react";
 import { useState } from "react";
-import { CustomizedDynamicContextProvider } from "@/components/dynamic-context-provider";
+import {
+  CustomizedDynamicContextProvider,
+  WagmiSetup,
+} from "@/components/dynamic-context-provider";
 import { AuthedLayout } from "@/components/authed-layout";
 
 export function MainLayout({ children }: { children: React.ReactNode }) {
@@ -40,7 +43,9 @@ function MainLayoutInner({ children }: { children: React.ReactNode }) {
       {dynamicContext.authToken === undefined ? (
         <NoWalletConnected />
       ) : (
-        <AuthedLayout>{children}</AuthedLayout>
+        <WagmiSetup>
+          <AuthedLayout>{children}</AuthedLayout>
+        </WagmiSetup>
       )}
     </>
   );

@@ -2,6 +2,7 @@
 
 import { DaoSelect } from "@/components/dao-select";
 import { DaoSelectUi } from "@/components/dao-select-ui";
+import { ShowDao } from "@/components/show-dao";
 import { useState } from "react";
 
 export default function Home() {
@@ -11,5 +12,5 @@ export default function Home() {
     return <DaoSelect onSelect={setSelectedDaoId} />;
   }
 
-  return <main></main>;
+  return <ShowDao daoId={selectedDaoId} />;
 }

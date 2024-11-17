@@ -11,14 +11,14 @@ export default function TestProposalDetailsPage() {
         name="First Dao"
         createdAt="2021-01-01 12:00:00"
         creatorWalletAddress="0x1234567890abcdef"
-        DaoWalletAddress="0x1234567890abcdef"
+        daoWalletAddress="0x1234567890abcdef"
         members={[{ walletAddress: "0x1234567890abcdef", votes: 100 }]}
         balance={1000}
         totalVotes={1000}
         OnSubmitAddMember={() => {
           console.log("Submitted Add Member");
         }}
-        OnUpdateMemberVotes={() => {
+        onUpdateMemberVotes={() => {
           console.log("Updated Member Votes");
         }}
       />
