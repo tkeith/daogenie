@@ -15,9 +15,6 @@ export default function TestProposalDetailsPage() {
         members={[{ walletAddress: "0x1234567890abcdef", votes: 100 }]}
         balance={1000}
         totalVotes={1000}
-        OnSubmitAddMember={() => {
-          console.log("Submitted Add Member");
-        }}
         onUpdateMemberVotes={() => {
           console.log("Updated Member Votes");
         }}
