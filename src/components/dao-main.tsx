@@ -71,7 +71,7 @@ export function DaoMain({ daoId }: { daoId: number }) {
     return (
       <div>
         Loading...
-        {JSON.stringify(
+        {/* {JSON.stringify(
           {
             // eslint-disable-next-line @typescript-eslint/no-base-to-string
             dao: dao && dao.toString(),
@@ -81,7 +81,7 @@ export function DaoMain({ daoId }: { daoId: number }) {
           },
           null,
           2,
-        )}
+        )} */}
       </div>
     );
   }

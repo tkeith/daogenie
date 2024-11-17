@@ -13,8 +13,8 @@ export type ProposalDetailsUiInput = {
     createdAt: string;
     creatorWalletAddress: string;
   };
-  OnSelectedYes: () => void;
-  OnSelectedNo: () => void;
+  onSelectedYes: () => void;
+  onSelectedNo: () => void;
 };
 
 export function ProposalDetailsUi({
@@ -22,8 +22,8 @@ export function ProposalDetailsUi({
   currentVotes,
   votedStatus,
   proposal,
-  OnSelectedYes,
-  OnSelectedNo,
+  onSelectedYes: onSelectedYes,
+  onSelectedNo: onSelectedNo,
 }: ProposalDetailsUiInput) {
   const showVoteButtons = proposal.status === "Voting" && !votedStatus;
 
@@ -84,13 +84,13 @@ export function ProposalDetailsUi({
       {showVoteButtons && (
         <div className="mb-6 flex space-x-4">
           <button
-            onClick={OnSelectedYes}
+            onClick={onSelectedYes}
             className="flex-1 rounded-lg bg-green-500 px-4 py-2 text-white hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
           >
             Vote Yes (+{currentVotes})
           </button>
           <button
-            onClick={OnSelectedNo}
+            onClick={onSelectedNo}
             className="flex-1 rounded-lg bg-red-500 px-4 py-2 text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
           >
             Vote No

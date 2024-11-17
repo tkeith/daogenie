@@ -28,7 +28,8 @@ export function CustomizedDynamicContextProvider({
         environmentId: env.NEXT_PUBLIC_DYNAMIC_ENV_ID,
         walletConnectors: [EthereumWalletConnectors],
         overrides: {
-          evmNetworks: (networks) => mergeNetworks(NETWORKS, networks),
+          // evmNetworks: (networks) => mergeNetworks(NETWORKS, networks),
+          evmNetworks: (networks) => NETWORKS,
         },
       }}
     >
@@ -53,7 +54,7 @@ export function WagmiSetup({ children }: { children: React.ReactNode }) {
   }, [ethereumWallet]);
 
   if (!ethereumWallet) {
-    return "no wallet";
+    return "Loading...";
   }
 
   if (!isEthereumWallet(ethereumWallet)) {

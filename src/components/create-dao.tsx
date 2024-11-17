@@ -32,5 +32,12 @@ export default function CreateDao({
     afterCreate();
   }
 
-  return <CreateDaoUi onSubmit={onSubmit} />;
+  return (
+    <CreateDaoUi
+      onSubmit={onSubmit}
+      onCancel={() => {
+        // todo
+      }}
+    />
+  );
 }

@@ -11,10 +11,10 @@ export default function TestProposalDetailsPage() {
         currentVotes={500}
         votesRequired={1000}
         votedStatus={false}
-        OnSelectedYes={() => {
+        onSelectedYes={() => {
           console.log("Voted Yes");
         }}
-        OnSelectedNo={() => {
+        onSelectedNo={() => {
           console.log("Voted No");
         }}
         proposal={{

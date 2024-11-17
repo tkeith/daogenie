@@ -8,6 +8,7 @@ import { useState } from "react";
 import { useReadContract, useReadContracts } from "wagmi";
 import { CreateProposal } from "@/components/create-proposal";
 import { DaoMain } from "@/components/dao-main";
+import { ShowProposal } from "@/components/show-proposal";
 
 export function ShowDao({ daoId }: { daoId: number }) {
   // State management for selected views
@@ -66,11 +67,16 @@ export function ShowDao({ daoId }: { daoId: number }) {
       daoName={dao.name}
       proposals={proposals}
       createProposalSelected={createProposalSelected}
-      onSelectCreateProposal={() => setCreateProposalSelected(true)}
+      onSelectCreateProposal={() => {
+        setCreateProposalSelected(true);
+        setDaoMainViewSelected(false);
+        setSelectedProposalId(null);
+      }}
       daoMainViewSelected={daoMainViewSelected}
       onSelectDaoMainView={() => {
         setDaoMainViewSelected(true);
         setCreateProposalSelected(false);
+        setSelectedProposalId(null);
       }}
       onSwitchDao={() => {
         // Handle DAO switching logic
@@ -81,8 +87,10 @@ export function ShowDao({ daoId }: { daoId: number }) {
       <div>
         {createProposalSelected ? (
           <CreateProposal daoId={daoId} />
-        ) : (
+        ) : selectedProposalId === null ? (
           <DaoMain daoId={daoId} />
+        ) : (
+          <ShowProposal daoId={daoId} proposalId={selectedProposalId} />
         )}
       </div>
     </DaoViewUi>
